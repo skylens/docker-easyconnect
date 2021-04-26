@@ -1,22 +1,16 @@
-version: '2'
+version: '3.3'
 services:
     easyconnect:
-        image: hagb/docker-easyconnect:7.6.3 # latest, vncless, 7.6.3, vncless-7.6.3, 7.6.7, vncless-7.6.7
+        image: hagb/docker-easyconnect:cli # latest, vncless, cli, 7.6.3, vncless-7.6.3, 7.6.7, vncless-7.6.7
         devices:
-          - /dev/dri
           - /dev/net/tun
         cap_add: 
           - NET_ADMIN
         volumes:
-          - /tmp/.X11-unix:/tmp/.X11-unix
-          - $HOME/.Xauthority:/root/.Xauthority
-          - $HOME/.ecdata:/root
+          - /etc/resolv.conf:/etc/resolv.conf:ro      
+          - /opt/easyconnect/easyconn:/root/.easyconn
         environment:
-          - DISPLAY=unix$DISPLAY
-          - URLWIN=1
-          - TYPE=X11
-#          - PASSWORD=password
-#          - NODANTED=
-#          - EXPASSWORD=
+          - EC_VER=7.6.7
+          - EXIT=1
         ports:
-          - "127.0.0.1:1081:1080"
+          - "1080:1080"
